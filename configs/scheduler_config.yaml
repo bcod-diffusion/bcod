@@ -1,0 +1,110 @@
+scheduler:
+  model:
+    type: "sac"
+    path: "models/sac_policy.onnx"
+    input_shape: [1, 64]
+    output_shape: [1, 6]
+    hidden_dim: 256
+    num_layers: 3
+    dropout_rate: 0.1
+    use_layer_norm: true
+
+  training:
+    learning_rate: 0.0003
+    weight_decay: 0.0001
+    gradient_clip: 1.0
+    warmup_steps: 1000
+    max_steps: 100000
+    eval_interval: 1000
+    save_interval: 5000
+    mixed_precision: true
+    num_workers: 4
+    pin_memory: true
+
+  optimization:
+    temperature: 0.2
+    lambda: 0.5
+    target_risk: 0.2
+    discount_factor: 0.99
+    entropy_coef: 0.01
+    value_coef: 0.5
+    policy_coef: 1.0
+    max_grad_norm: 1.0
+    batch_size: 256
+    buffer_size: 1000000
+    update_interval: 1
+    target_update_interval: 1000
+
+  observation:
+    dim: 64
+    features:
+      - "belief_state"
+      - "sensor_status"
+      - "power_consumption"
+      - "localization_uncertainty"
+      - "environment_conditions"
+      - "task_requirements"
+    normalization:
+      type: "running"
+      momentum: 0.99
+      epsilon: 1e-5
+
+  action:
+    dim: 6
+    features:
+      - "lidar_activation"
+      - "rgb_activation"
+      - "thermal_activation"
+      - "gnss_activation"
+      - "imu_activation"
+      - "exo2_activation"
+    constraints:
+      min_activation: 0.0
+      max_activation: 1.0
+      min_duration: 0.1
+      max_duration: 10.0
+      min_interval: 0.5
+      max_interval: 5.0
+
+  reward:
+    components:
+      - name: "localization_accuracy"
+        weight: 0.4
+        scale: 1.0
+      - name: "power_efficiency"
+        weight: 0.3
+        scale: 1.0
+      - name: "sensor_lifetime"
+        weight: 0.2
+        scale: 1.0
+      - name: "task_completion"
+        weight: 0.1
+        scale: 1.0
+    shaping:
+      use_curriculum: true
+      curriculum_steps: 5
+      difficulty_increase: 0.2
+
+  hardware:
+    cuda_device: 0
+    num_threads: 4
+    memory_limit: 4096
+    tensor_cores: true
+    graph_optimization: true
+    dynamic_shapes: true
+    fp16: true
+
+  logging:
+    level: "info"
+    log_file: "scheduler.log"
+    tensorboard: true
+    wandb: false
+    metrics:
+      - "loss"
+      - "risk"
+      - "power"
+      - "accuracy"
+      - "planning_time"
+      - "inference_time"
+      - "memory_usage"
+      - "gpu_utilization" 

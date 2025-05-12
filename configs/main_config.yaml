@@ -1,0 +1,106 @@
+# example config file
+imports:
+  - "sensors_power.yaml"
+  - "planner_config.yaml"
+  - "scheduler_config.yaml"
+  - "environment_config.yaml"
+
+system:
+  name: "B-COD"
+  version: "1.0.0"
+  description: "Belief-Conditioned One-Step Diffusion for Sensor Management"
+  mode: "simulation"  # or "real"
+  debug: false
+
+paths:
+  models: "models/"
+  logs: "logs/"
+  data: "data/"
+  visualizations: "visualizations/"
+  configs: "configs/"
+
+hardware:
+  cuda_device: 0
+  num_threads: 4
+  memory_limit: 4096
+  tensor_cores: true
+  graph_optimization: true
+  dynamic_shapes: true
+  fp16: true
+
+logging:
+  level: "info"
+  log_file: "main.log"
+  tensorboard: true
+  wandb: false
+  metrics:
+    - "system"
+    - "planner"
+    - "scheduler"
+    - "environment"
+    - "hardware"
+    - "performance"
+    - "memory"
+    - "power"
+
+performance:
+  real_time: true
+  max_latency: 0.1
+  min_fps: 10
+  profiling:
+    enabled: true
+    interval: 1000
+    output: "profiles/"
+  monitoring:
+    enabled: true
+    interval: 1.0
+    metrics:
+      - "cpu_usage"
+      - "gpu_usage"
+      - "memory_usage"
+      - "power_usage"
+      - "temperature"
+      - "fps"
+      - "latency"
+
+security:
+  encryption: true
+  authentication: true
+  ssl: true
+  certificates:
+    ca: "certs/ca.pem"
+    cert: "certs/cert.pem"
+    key: "certs/key.pem"
+  permissions:
+    read: ["configs/", "models/", "data/"]
+    write: ["logs/", "visualizations/", "profiles/"]
+    execute: ["bin/", "scripts/"]
+
+backup:
+  enabled: true
+  interval: 3600
+  max_backups: 10
+  compression: true
+  encryption: true
+  paths:
+    - "configs/"
+    - "models/"
+    - "data/"
+    - "logs/"
+  output: "backups/"
+
+maintenance:
+  cleanup:
+    enabled: true
+    interval: 86400
+    max_age: 604800
+    paths:
+      - "logs/"
+      - "visualizations/"
+      - "profiles/"
+      - "backups/"
+  update:
+    enabled: true
+    auto: false
+    check_interval: 86400
+    channel: "stable" 

@@ -1,0 +1,62 @@
+rasteriser:
+  resolution: 0.1
+  max_range: 10.0
+  min_weight: 0.01
+  origin_x: 0.0
+  origin_y: 0.0
+
+planner:
+  batch_size: 1
+  sequence_length: 16
+  max_velocity: 2.0
+  max_angular_velocity: 1.0
+  risk_threshold: 0.1
+  model_path: "assets/student_engine.plan"
+
+scheduler:
+  observation_dim: 128
+  action_dim: 6
+  temperature: 0.1
+  lambda: 0.1
+  target_risk: 0.05
+  learning_rate: 0.001
+  discount_factor: 0.99
+  policy_path: "assets/sac_policy.onnx"
+
+logging:
+  level: "INFO"
+  file: "bcod.log"
+  use_colors: true
+
+hardware:
+  cuda_device: 0
+  num_threads: 4
+  memory_limit: 2048
+  enable_tensor_cores: true
+  enable_fp16: true
+
+sensors:
+  lidar:
+    power: 45.0
+    warmup: 5.0
+    noise: 0.05
+  rgb:
+    power: 12.0
+    warmup: 1.0
+    noise: 0.10
+  thermal:
+    power: 8.0
+    warmup: 2.0
+    noise: 0.15
+  gnss:
+    power: 2.5
+    warmup: 0.1
+    noise: 0.02
+  imu:
+    power: 1.2
+    warmup: 0.05
+    noise: 0.01
+  exo2:
+    power: 35.0
+    warmup: 3.0
+    noise: 0.08 

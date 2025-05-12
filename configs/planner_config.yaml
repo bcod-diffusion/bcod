@@ -1,0 +1,79 @@
+planner:
+  model:
+    type: "student"
+    path: "models/student_planner.onnx"
+    input_shape: [1, 256, 256, 3]
+    output_shape: [1, 50, 2]
+    batch_size: 32
+    sequence_length: 50
+    hidden_dim: 256
+    num_layers: 4
+    dropout_rate: 0.1
+    use_layer_norm: true
+
+  training:
+    learning_rate: 0.001
+    weight_decay: 0.0001
+    gradient_clip: 1.0
+    warmup_steps: 1000
+    max_steps: 100000
+    eval_interval: 1000
+    save_interval: 5000
+    mixed_precision: true
+    num_workers: 4
+    pin_memory: true
+
+  optimization:
+    max_velocity: 2.0
+    max_angular_velocity: 1.0
+    acceleration_limit: 0.5
+    angular_acceleration_limit: 0.3
+    collision_threshold: 0.5
+    goal_threshold: 0.1
+    risk_threshold: 0.2
+    energy_weight: 0.3
+    safety_weight: 0.7
+
+  sampling:
+    num_particles: 1000
+    resampling_threshold: 0.5
+    min_weight: 0.01
+    max_weight: 10.0
+    noise_scale: 0.1
+    motion_noise: 0.05
+    measurement_noise: 0.1
+
+  visualization:
+    show_trajectory: true
+    show_particles: true
+    show_uncertainty: true
+    show_risk: true
+    show_energy: true
+    colormap: "viridis"
+    update_rate: 10
+    save_frames: true
+    output_dir: "visualizations"
+
+  hardware:
+    cuda_device: 0
+    num_threads: 4
+    memory_limit: 4096
+    tensor_cores: true
+    graph_optimization: true
+    dynamic_shapes: true
+    fp16: true
+
+  logging:
+    level: "info"
+    log_file: "planner.log"
+    tensorboard: true
+    wandb: false
+    metrics:
+      - "loss"
+      - "risk"
+      - "energy"
+      - "safety"
+      - "planning_time"
+      - "inference_time"
+      - "memory_usage"
+      - "gpu_utilization" 

@@ -1,0 +1,123 @@
+# example environment config (masked for anonymity)
+environment:
+  world:
+    size: [100.0, 100.0]
+    resolution: 0.1
+    origin: [0.0, 0.0]
+    obstacles:
+      - type: "static"
+        shape: "polygon"
+        vertices: [[10.0, 10.0], [20.0, 10.0], [20.0, 20.0], [10.0, 20.0]]
+      - type: "static"
+        shape: "circle"
+        center: [50.0, 50.0]
+        radius: 5.0
+      - type: "dynamic"
+        shape: "rectangle"
+        position: [30.0, 30.0]
+        size: [5.0, 5.0]
+        velocity: [0.5, 0.0]
+    features:
+      - type: "landmark"
+        position: [25.0, 25.0]
+        uncertainty: 0.1
+      - type: "landmark"
+        position: [75.0, 75.0]
+        uncertainty: 0.1
+      - type: "noise_source"
+        position: [40.0, 40.0]
+        intensity: 0.5
+        radius: 10.0
+
+  robot:
+    type: "unmanned_surface_vehicle"
+    dimensions: [2.0, 1.0]
+    max_velocity: 2.0
+    max_angular_velocity: 1.0
+    acceleration_limit: 0.5
+    angular_acceleration_limit: 0.3
+    sensors:
+      - type: "lidar"
+        position: [0.0, 0.0]
+        orientation: 0.0
+        range: 30.0
+        fov: 360.0
+        resolution: 0.1
+      - type: "rgb"
+        position: [0.0, 0.0]
+        orientation: 0.0
+        resolution: [1920, 1080]
+        fov: 90.0
+      - type: "thermal"
+        position: [0.0, 0.0]
+        orientation: 0.0
+        resolution: [640, 480]
+        fov: 60.0
+      - type: "gnss"
+        position: [0.0, 0.0]
+        orientation: 0.0
+        accuracy: 0.1
+        update_rate: 10.0
+      - type: "imu"
+        position: [0.0, 0.0]
+        orientation: 0.0
+        accuracy: 0.01
+        update_rate: 100.0
+      - type: "exo2"
+        position: [0.0, 0.0]
+        orientation: 0.0
+        range: 20.0
+        fov: 180.0
+        resolution: 0.2
+
+  simulation:
+    time_step: 0.1
+    max_steps: 1000
+    physics:
+      gravity: 9.81
+      water_density: 1000.0
+      air_density: 1.225
+      wind_speed: 5.0
+      wind_direction: 45.0
+      wave_height: 0.5
+      wave_period: 5.0
+    noise:
+      position: 0.1
+      orientation: 0.01
+      velocity: 0.05
+      angular_velocity: 0.01
+      sensor:
+        lidar: 0.05
+        rgb: 0.1
+        thermal: 0.1
+        gnss: 0.1
+        imu: 0.01
+        exo2: 0.05
+
+  visualization:
+    show_world: true
+    show_robot: true
+    show_sensors: true
+    show_trajectory: true
+    show_uncertainty: true
+    show_risk: true
+    show_energy: true
+    colormap: "viridis"
+    update_rate: 10
+    save_frames: true
+    output_dir: "visualizations"
+
+  logging:
+    level: "info"
+    log_file: "environment.log"
+    tensorboard: true
+    wandb: false
+    metrics:
+      - "position_error"
+      - "orientation_error"
+      - "velocity_error"
+      - "angular_velocity_error"
+      - "sensor_accuracy"
+      - "power_consumption"
+      - "simulation_time"
+      - "memory_usage" 
