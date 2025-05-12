@@ -23,6 +23,8 @@ We show that this single proxy suffices for a soft-actor–critic to choose sens
 We deploy B-COD in real-time marine trials on an unmanned surface vehicle and show that it reduces sensing energy consumption while matching the goal-reach performance of an always-on baseline. 
 
 ## Key Features
+### Architecture
+![Architecture Diagram](static/arch.png)
 
 - **Belief State Rasterization**: Efficient representation of robot state uncertainty using a 5-channel raster
 - **One-Step Diffusion**: Fast trajectory generation with calibrated risk estimates
@@ -140,8 +142,7 @@ int main() {
 }
 ```
 
-## Architecture
-![Architecture Diagram](static/arch.png)
+
 
 ## Performance
 Please visit our website for performance results: https://bcod-diffusion.github.io
