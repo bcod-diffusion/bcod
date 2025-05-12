@@ -1,4 +1,4 @@
-# B-COD: Belief-Conditioned One-Step Diffusion for Sensor Management
+# Belief-Conditioned One-Step Diffusion: Real-Time Trajectory Planning with Just-Enough Sensing
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
